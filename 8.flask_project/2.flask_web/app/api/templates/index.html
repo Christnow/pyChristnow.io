@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,user-scalable=no" />
+    <title>Hi</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px
+        }
+        .content-box{
+            width: 100%;
+            min-height: 500px;
+        }
+        .image-box{
+            width: 200px;
+            height: 200px;
+            background: url(../../static/images/skl.jpg) 0px no-repeat;
+            background-size: 200px;
+            border-radius: 201px;
+            margin: 10px auto;
+        }
+        .image-my-box{
+            width: 100px;
+            height: 100px;
+            background: url(../../static/images/head-my.jpg) 0px no-repeat;
+            background-size: 100px;
+            border-radius: 100px;
+            float: left;
+        }
+        .image-skl-box{
+            width: 100px;
+            height: 100px;
+            background: url(../../static/images/head-skl.jpg) 0px no-repeat;
+            background-size: 100px;
+            border-radius: 100px;
+            float: right;
+        }
+        .needLove-image{
+            width: 200px;
+            height: 200px;
+            background: url(../../static/images/needLove.jpg) 0px no-repeat;
+            background-size: 200px 203px;
+            float: left;
+        }
+        .success-box{
+            display: none;
+        }
+        .btn-box{
+            width: 100%;
+            height: auto;
+            float: right;
+            margin-top: 10px;
+        }
+        .btn-box .btn-ok{
+            padding: 8px 50px;
+            background: green;
+            color: white;
+            float: left;
+            margin-left: 30px;
+            border-radius: 3px;
+        }
+        .btn-box .btn-bad{
+            padding: 8px 50px;
+            background: red;
+            color: white;
+            float: right;
+            margin-right: 30px;
+            border-radius: 3px;
+        }
+        .success-content{
+            display: none;
+            margin-bottom: 10px;
+        }
+
+        .success-marry-image{
+            display: none;
+            width: 250px;
+            height: 250px;
+            background: url(../../static/images/timg.jpg) 0px no-repeat;
+            background-size: 250px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="content-box">
+    <div class="needLove-content">
+        <p></p>
+        <br></br>
+        <p style="font-size:20px;width:600px;height:50px;">请看着我的眼睛，我已经观察你很久了哟</p>
+        <p></p>
+        <p  style="font-size:18px;width:600px;height:50px;">&nbsp;&nbsp;做我的小淘气好不好？</p>
+    </div>
+    <div class="success-content">
+        <p  style="font-size: 18px;font-weight: 600;height:50px;text-align: center;">&nbsp;&nbsp;谢谢你,亲爱的,嘻嘻，哈哈</p>
+    </div>
+    <div class="success-box">
+        <div class="image-my-box"></div>
+        <div class="image-skl-box"></div>
+    </div>
+
+    <div class="needLove-image"></div>
+
+    <div class="success-marry-image"></div>
+
+    <div class="btn-box">
+        <div class="btn-ok">好</div>
+        <div class="btn-bad">不好</div>
+    </div>
+</div>
+<div id="dialog-message" title="提示">
+    <p></p>
+</div>
+<script type="text/javascript" src="{{ url_for('static',filename='js/jquery-3.3.1.min.js') }}"></script>
+<script type="text/javascript">
+
+    /**
+     * 同意执行函数
+     */
+    function success() {
+        $(".success-box").show();
+        $(".success-content").show();
+        $(".needLove-image").hide();
+        $(".btn-box").hide();
+        $(".needLove-content").hide();
+        var curentIndex = $('.content-box').width()-100;
+        var timer =  setInterval(function(){
+            if(curentIndex<=85){
+                clearInterval(timer);
+                heart();
+            }
+            $(".image-skl-box").css({"float":"none","margin-left":curentIndex+"px"});
+            curentIndex-=5;
+        },50);
+    }
+
+    /**
+     * 显示小心
+     */
+    function heart() {
+        var maxIndex = $('.content-box').width()/2-100;
+        var curentIndex = 0;
+        var hHeigth  = 0;
+        var timer =  setInterval(function(){
+            if(curentIndex>=maxIndex){
+                clearInterval(timer);
+                $(".success-marry-image").show(1000);
+            }
+            var temp = 0;
+            if(hHeigth>5){
+                temp = hHeigth-90;
+            }
+            $(".image-my-box").css({"margin-left":curentIndex+"px","margin-top":temp+"px"});
+            $(".image-skl-box").css({"float":"none","margin-left":(curentIndex+85)+"px","margin-top":hHeigth+"px"});
+            curentIndex+=5;
+            hHeigth+=5;
+        },50);
+    }
+
+    /**
+     * 不同意执行函数
+     */
+    var count = 0;
+    var content = "";
+    function fail(){
+        switch (count){
+            case 0:
+                content = "工资上交哟";
+                count++;
+                break;
+            case 1:
+                content = "教务全包哟";
+                count++;
+                break;
+            case 2:
+                content = "房产证写你的名字";
+                count++;
+                break;
+            case 3:
+                content = "保大";
+                count++;
+                break;
+            case 4:
+                content = "我妈不会游泳，哈哈";
+                count++;
+                break;
+            case 5:
+                content = "不和你吵架，会撒娇，会卖萌哟";
+                count++;
+                break;
+            case 6:
+                content = "答应我吧";
+                count++;
+                break;
+            default:
+                content = "好吧，我哭了！我走了";
+                break;
+        }
+        alert(content);
+    }
+
+    $(function () {
+
+        /**好*/
+        $(".btn-box .btn-ok").click(function () {
+            success()
+        });
+
+        /**不好*/
+        $(".btn-box .btn-bad").click(function () {
+            fail();
+        });
+    })
+</script>
+</body>
+</html>
